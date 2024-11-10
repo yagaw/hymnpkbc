@@ -56,7 +56,13 @@ export default class Hymn extends Component<{}, HymnState> {
 
     return (
       <View style={{ backgroundColor: "white", flex: 1 }}>
-        <View style={styles.searchContainer}>
+        <View
+          style={[
+            styles.searchContainer,
+            { marginLeft: 20 },
+            { marginRight: 20 },
+          ]}
+        >
           <Icon name="search" size={20} color="#000" style={styles.icon} />
           <TextInput
             style={styles.input}
@@ -103,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 2,
     borderColor: "#e0e0e2",
-    borderRadius: 5,
+    borderRadius: 10,
     paddingHorizontal: 10,
     backgroundColor: "#e0e0e2",
   },
@@ -117,8 +123,10 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     textAlign: "center",
+    paddingTop: 50,
   },
   description: {
     textAlign: "center",
+    paddingBottom: 50,
   },
 })
