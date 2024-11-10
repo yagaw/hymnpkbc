@@ -1,3 +1,4 @@
+// index.tsx
 import { Text, View } from "react-native"
 import React, { Component } from "react"
 import Hymn from "@/components/Hymn"

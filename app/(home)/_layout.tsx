@@ -20,7 +20,7 @@ export default class _layoyt extends Component {
           name="setting"
           options={{
             title: "Setting",
-            tabBarIcon: () => <MaterialIcons name="book" size={29} />,
+            tabBarIcon: () => <MaterialIcons name="settings" size={29} />,
             tabBarLabelStyle: { fontWeight: "bold" }, // Make the title bold
             headerTitleStyle: { fontWeight: "bold" }, //make the header title bold
           }}

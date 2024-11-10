@@ -1,7 +1,9 @@
 import React, { Component } from "react"
 import { Text, View, TextInput, FlatList, StyleSheet } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import hymns from "../assets/pwohymn.json" // Import the JSON data
+import settingsData from "../assets/settings.json" // Import the settings JSON data
 
 interface HymnItem {
   id: number
@@ -9,10 +11,34 @@ interface HymnItem {
   description: string
 }
 
-export default class Hymn extends Component {
-  state = {
+interface HymnState {
+  searchQuery: string
+  searchResults: HymnItem[]
+  fontSize: number
+}
+
+const STORAGE_KEY = "@hymn_font_size"
+
+export default class Hymn extends Component<{}, HymnState> {
+  state: HymnState = {
     searchQuery: "",
     searchResults: [],
+    fontSize: settingsData.fontSize, // Load the default font size from settings.json
+  }
+
+  componentDidMount() {
+    this.loadSavedFontSize()
+  }
+
+  loadSavedFontSize = async () => {
+    try {
+      const savedSize = await AsyncStorage.getItem(STORAGE_KEY)
+      if (savedSize) {
+        this.setState({ fontSize: JSON.parse(savedSize) })
+      }
+    } catch (error) {
+      console.error("Error loading font size:", error)
+    }
   }
 
   handleSearch = () => {
@@ -26,7 +52,7 @@ export default class Hymn extends Component {
   }
 
   render() {
-    const { searchQuery, searchResults } = this.state
+    const { searchQuery, searchResults, fontSize } = this.state
 
     return (
       <View style={{ backgroundColor: "white", flex: 1 }}>
@@ -58,8 +84,10 @@ export default class Hymn extends Component {
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.description}>{item.description}</Text>
+                <Text style={[styles.title, { fontSize }]}>{item.title}</Text>
+                <Text style={[styles.description, { fontSize }]}>
+                  {item.description}
+                </Text>
               </View>
             )}
           />
@@ -73,7 +101,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: "#e0e0e2",
     borderRadius: 5,
     paddingHorizontal: 10,
@@ -84,20 +112,14 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    marginRight: 10,
-    borderBottomWidth: 1,
-    borderColor: "#ccc",
-    padding: 5,
+    height: 40,
   },
   title: {
-    textAlign: "center",
-    fontSize: 15,
     fontWeight: "bold",
-    fontFamily: "Padauk-Bold", // Updated custom font name
+    textAlign: "center",
   },
   description: {
+    color: "gray",
     textAlign: "center",
-    paddingBottom: 20,
-    fontFamily: "Padauk-Regular", // Updated custom font name
   },
 })

@@ -1,0 +1,9 @@
+{
+  "fontSize": 18,
+  "fontSizes": {
+    "small": 14,
+    "medium": 18,
+    "large": 22,
+    "extraLarge": 26
+  }
+}
