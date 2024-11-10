@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     paddingTop: 50,
+    paddingBottom: 10,
   },
   description: {
     textAlign: "center",
