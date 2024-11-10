@@ -34,7 +34,7 @@ export default function Setting() {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(size))
       setFontSize(size)
       // Simulate updating settings.json by logging the new settings
-      console.log("Updated settings.json:", { ...settingsData, fontSize: size })
+      // console.log("Updated settings.json:", { ...settingsData, fontSize: size })
     } catch (error) {
       console.error("Error saving font size:", error)
     }
@@ -48,7 +48,8 @@ export default function Setting() {
         <View style={styles.previewContainer}>
           <Text style={styles.previewLabel}>Preview</Text>
           <Text style={[styles.previewText, { fontSize }]}>
-            Amazing grace! How sweet the sound
+            ယဖျိၩ့ဆၨၩယဝ့ၫဧ့, ၦလၧအဂ့ၩဒိၪထုၭ, ယအဲၪဒိၪနၧၩ, နအဲၪဆၧတီၩဆၧလီၩ့,
+            ၦမွံၩနအဲၪထိးဆၧၫ့, နဆၧဂ့ၩကိၭမံၩ့နီၪ ယအဲၪဒိၪမၬ.{" "}
           </Text>
         </View>
 
@@ -74,6 +75,7 @@ export default function Setting() {
           ))}
         </View>
       </View>
+      <Text style={styles.versionText}>Version 1.0</Text>
     </ScrollView>
   )
 }
@@ -123,5 +125,11 @@ const styles = StyleSheet.create({
   },
   selectedButtonText: {
     color: "#fff",
+  },
+  versionText: {
+    fontSize: 14,
+    color: "gray",
+    textAlign: "center",
+    marginTop: 20,
   },
 })

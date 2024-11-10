@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   description: {
-    color: "gray",
     textAlign: "center",
   },
 })
