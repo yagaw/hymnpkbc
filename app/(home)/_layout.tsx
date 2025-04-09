@@ -17,6 +17,15 @@ export default class _layoyt extends Component {
           }}
         />
         <Tabs.Screen
+          name="bible"
+          options={{
+            title: "Respond Reading",
+            tabBarIcon: () => <MaterialIcons name="book" size={29} />,
+            tabBarLabelStyle: { fontWeight: "bold" }, // Make the title bold
+            headerTitleStyle: { fontWeight: "bold" }, //make the header title bold
+          }}
+        />
+        <Tabs.Screen
           name="setting"
           options={{
             title: "Setting",

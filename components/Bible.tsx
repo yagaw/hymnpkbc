@@ -2,13 +2,18 @@ import React, { Component } from "react"
 import { Text, View, TextInput, FlatList, StyleSheet } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import hymns from "../assets/pwohymn.json" // Import the JSON data
+import hymns from "../assets/pworb" // Import the TypeScript data
 import settingsData from "../assets/settings.json" // Import the settings JSON data
+
+interface Paragraph {
+  type: string
+  text: string
+}
 
 interface HymnItem {
   id: number
   title: string
-  description: string
+  paragraphs: Paragraph[]
 }
 
 interface HymnState {
@@ -19,7 +24,7 @@ interface HymnState {
 
 const STORAGE_KEY = "@hymn_font_size"
 
-export default class Hymn extends Component<{}, HymnState> {
+export default class Bible extends Component<{}, HymnState> {
   state: HymnState = {
     searchQuery: "",
     searchResults: [],
@@ -51,6 +56,26 @@ export default class Hymn extends Component<{}, HymnState> {
     this.setState({ searchResults: results })
   }
 
+  renderItem = ({ item }: { item: HymnItem }) => (
+    <View style={styles.itemContainer}>
+      <Text style={[styles.title, { fontSize: this.state.fontSize }]}>
+        {item.title}
+      </Text>
+      {item.paragraphs.map((paragraph, index) => (
+        <Text
+          key={index}
+          style={[
+            styles.description,
+            { fontSize: this.state.fontSize },
+            paragraph.type === "b" ? { fontWeight: "bold" } : {},
+          ]}
+        >
+          {paragraph.text}
+        </Text>
+      ))}
+    </View>
+  )
+
   render() {
     const { searchQuery, searchResults, fontSize } = this.state
 
@@ -70,7 +95,7 @@ export default class Hymn extends Component<{}, HymnState> {
               this.setState({ searchQuery: text }, this.handleSearch)
             }}
             value={searchQuery}
-            placeholder="Search Hymn Number Here"
+            placeholder="Search Respond Bible Number Here"
           />
           {searchQuery !== "" && (
             <Icon
@@ -88,14 +113,7 @@ export default class Hymn extends Component<{}, HymnState> {
           <FlatList<HymnItem>
             data={searchResults}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <View>
-                <Text style={[styles.title, { fontSize }]}>{item.title}</Text>
-                <Text style={[styles.description, { fontSize }]}>
-                  {item.description}
-                </Text>
-              </View>
-            )}
+            renderItem={this.renderItem}
           />
         )}
       </View>
@@ -123,11 +141,18 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     textAlign: "center",
-    paddingTop: 50,
-    paddingBottom: 10,
+    paddingTop: 20,
+    paddingBottom: 20,
+    fontSize: 24,
   },
   description: {
-    textAlign: "center",
-    paddingBottom: 50,
+    textAlign: "left",
+    paddingBottom: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontSize: 18,
+  },
+  itemContainer: {
+    padding: 20,
   },
 })

@@ -75,7 +75,7 @@ export default function Setting() {
           ))}
         </View>
       </View>
-      <Text style={styles.versionText}>Version 1.0</Text>
+      <Text style={styles.versionText}>Version 2.0</Text>
     </ScrollView>
   )
 }
